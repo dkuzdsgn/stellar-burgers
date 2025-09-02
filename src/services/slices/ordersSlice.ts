@@ -109,9 +109,6 @@ export const connectFeedWs = () => (dispatch: AppDispatch) => {
       );
     }
   };
-
-  websocket.onclose = () => console.log('WS closed');
-  websocket.onerror = (err) => console.error('WS error', err);
 };
 
 export const connectUserFeedWs = () => (dispatch: AppDispatch) => {
@@ -131,7 +128,4 @@ export const connectUserFeedWs = () => (dispatch: AppDispatch) => {
       );
     }
   };
-
-  websocket.onclose = () => console.log('WS closed');
-  websocket.onerror = (err) => console.error('WS error', err);
 };

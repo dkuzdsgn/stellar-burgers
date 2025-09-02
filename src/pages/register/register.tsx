@@ -13,7 +13,6 @@ export const Register: FC = () => {
 
   const handleSubmit = (e: SyntheticEvent) => {
     e.preventDefault();
-    console.log({ name: userName, email, password });
     dispatch(register({ name: userName, email, password }))
       .unwrap()
       .then(() => navigate('/'));

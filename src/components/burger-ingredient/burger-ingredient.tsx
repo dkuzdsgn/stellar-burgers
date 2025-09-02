@@ -22,7 +22,6 @@ export const BurgerIngredient: FC<TBurgerIngredientProps> = memo(
       } else if (ingredient.type === 'main') {
         dispatch(addIngredient(item));
       }
-      console.log('handleAdd called:', ingredient);
     };
 
     return (

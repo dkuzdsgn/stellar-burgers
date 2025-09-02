@@ -142,7 +142,6 @@ export const register = createAsyncThunk(
   async ({ name, email, password }: TRegisterData, { rejectWithValue }) => {
     try {
       const data = await registerUserApi({ name, email, password });
-      console.log('accessToken from API:', data.accessToken);
       if (!data?.success) {
         return rejectWithValue(data);
       }

@@ -16,7 +16,6 @@ export const BurgerIngredients: FC = () => {
   useEffect(() => {
     if (!ingredients.length) {
       dispatch(fetchIngredients());
-      console.log('Dispatching fetchIngredients...');
     }
   }, [dispatch, ingredients.length]);
 
@@ -52,15 +51,6 @@ export const BurgerIngredients: FC = () => {
       setCurrentTab('main');
     }
   }, [inViewBuns, inViewFilling, inViewSauces]);
-
-  useEffect(() => {
-    if (ingredients.length) {
-      console.log(
-        'Types in ingredients:',
-        ingredients.map((i) => i.type)
-      );
-    }
-  }, [ingredients]);
 
   const onTabClick = (tab: string) => {
     setCurrentTab(tab as TTabMode);

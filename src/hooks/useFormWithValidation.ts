@@ -41,8 +41,6 @@ export function useFormWithValidation<T>(
   return { values, handleChange, errors, isValid };
 }
 
-// Функция initError создаёт объект с такими же ключами , как у того,
-//  с которым работает хук, но с пустыми строками в значениях
 function initError<T>(a: T): TErrorState<T> {
   return Object.keys(a as object).reduce((acc, k) => {
     acc[k as keyof T] = '';

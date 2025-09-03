@@ -93,24 +93,6 @@ export const { setOrders, setFeed } = ordersSlice.actions;
 
 export default ordersSlice.reducer;
 
-export const connectFeedWs = () => (dispatch: AppDispatch) => {
-  const url = 'wss://norma.nomoreparties.space/orders/all';
-  const websocket = new WebSocket(url);
-
-  websocket.onmessage = (event) => {
-    const data = JSON.parse(event.data);
-    if (data.success) {
-      dispatch(setOrders(data.orders));
-      dispatch(
-        setFeed({
-          total: data.total,
-          totalToday: data.totalToday
-        })
-      );
-    }
-  };
-};
-
 export const connectUserFeedWs = () => (dispatch: AppDispatch) => {
   const token = getCookie('accessToken');
   const url = `wss://norma.nomoreparties.space/orders?token=${token}`;

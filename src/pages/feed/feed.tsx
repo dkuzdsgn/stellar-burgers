@@ -1,10 +1,7 @@
 import { Preloader } from '@ui';
 import { FeedUI } from '@ui-pages';
 import { useDispatch, useSelector } from '../../services/store';
-import {
-  connectFeedWs,
-  fetchFeedOrders
-} from '../../services/slices/ordersSlice';
+import { fetchFeedOrders } from '../../services/slices/ordersSlice';
 import { FC, useEffect } from 'react';
 
 export const Feed: FC = () => {
@@ -13,7 +10,6 @@ export const Feed: FC = () => {
 
   useEffect(() => {
     dispatch(fetchFeedOrders());
-    dispatch(connectFeedWs());
   }, [dispatch]);
   if (!orders) {
     return <Preloader />;

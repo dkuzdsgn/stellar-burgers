@@ -3,8 +3,6 @@ import { FC, SyntheticEvent, useEffect, useState } from 'react';
 import { useSelector, RootState, useDispatch } from '../../services/store';
 import { Preloader } from '../../components/ui/preloader';
 import { updateUser } from '../../services/slices/authSlice';
-// import { useFormWithValidation } from '@/hooks/useFormWithValidation';
-// import { formValidators } from '@/utils/validators';
 
 export const Profile: FC = () => {
   const dispatch = useDispatch();

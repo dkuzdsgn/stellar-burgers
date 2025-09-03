@@ -9,13 +9,14 @@ import {
 } from '../../utils/burger-api';
 import { TUser } from '@utils-types';
 import { setCookie, deleteCookie, getCookie } from '../../utils/cookie';
+import { RootState } from '../store';
 
 type TAuthState = {
   form: TLoginData;
   error: string | null;
   sending: boolean;
   user: TUser | null;
-  isInit: boolean;
+  isAuthChecked: boolean;
 };
 
 const initialState: TAuthState = {
@@ -25,14 +26,18 @@ const initialState: TAuthState = {
   },
   error: null,
   sending: false,
-  user: { name: '', email: '' },
-  isInit: false
+  user: null,
+  isAuthChecked: false
 };
 
 export type TFieldType<T> = {
   field: keyof T;
   value: string;
 };
+
+export const isAuthCheckedSelector = (state: RootState) =>
+  state.auth.isAuthChecked;
+export const userDataSelector = (state: RootState) => state.auth.user;
 
 export const authSlice = createSlice({
   name: 'auth',
@@ -41,11 +46,11 @@ export const authSlice = createSlice({
     setFormValue: (state, action: PayloadAction<TFieldType<TLoginData>>) => {
       state.form[action.payload.field] = action.payload.value;
     },
-    setIsInit: (state, action: PayloadAction<boolean>) => {
-      state.isInit = action.payload;
-    },
     userLogout: (state) => {
       state.user = null;
+    },
+    authChecked: (state) => {
+      state.isAuthChecked = true;
     }
   },
   selectors: {
@@ -66,7 +71,7 @@ export const authSlice = createSlice({
       .addCase(login.fulfilled, (state, action) => {
         state.sending = false;
         state.user = action.payload;
-        state.isInit = true;
+        state.isAuthChecked = true;
       })
       .addCase(register.pending, (state) => {
         state.error = null;
@@ -75,7 +80,7 @@ export const authSlice = createSlice({
       .addCase(register.fulfilled, (state, action) => {
         state.sending = false;
         state.user = action.payload;
-        state.isInit = true;
+        state.isAuthChecked = true;
       })
       .addCase(register.rejected, (state, action) => {
         state.sending = false;
@@ -83,13 +88,13 @@ export const authSlice = createSlice({
       })
       .addCase(getUser.fulfilled, (state, action) => {
         state.user = action.payload;
-        state.isInit = true;
+        state.isAuthChecked = true;
       })
       .addCase(logout.fulfilled, (state) => {
-        state.user = { name: '', email: '' };
+        state.user = null;
         state.error = null;
         state.sending = false;
-        state.isInit = true;
+        state.isAuthChecked = true;
       })
       .addCase(updateUser.pending, (state) => {
         state.sending = true;
@@ -188,7 +193,20 @@ export const updateUser = createAsyncThunk(
   }
 );
 
-export const { setFormValue, setIsInit, userLogout } = authSlice.actions;
+export const checkUserAuth = createAsyncThunk(
+  'user/checkUser',
+  (_, { dispatch }) => {
+    if (getCookie('accessToken')) {
+      dispatch(getUser()).finally(() => {
+        dispatch(authChecked());
+      });
+    } else {
+      dispatch(authChecked());
+    }
+  }
+);
+
+export const { setFormValue, userLogout, authChecked } = authSlice.actions;
 
 export const { sendingSelector, sendErrorSelector, authSelector } =
   authSlice.selectors;

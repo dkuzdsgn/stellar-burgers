@@ -1,14 +1,29 @@
+import { nanoid } from 'nanoid';
+
 import { useState, useRef, useEffect, FC } from 'react';
 import { useInView } from 'react-intersection-observer';
-
-import { TTabMode } from '@utils-types';
+import { useSelector, useDispatch } from '../../services/store';
+import { TConstructorIngredient, TIngredient, TTabMode } from '@utils-types';
 import { BurgerIngredientsUI } from '../ui/burger-ingredients';
-
+import { fetchIngredients } from '../../services/slices/ingredientsSlice';
+import { Preloader } from '@ui';
 export const BurgerIngredients: FC = () => {
-  /** TODO: взять переменные из стора */
-  const buns = [];
-  const mains = [];
-  const sauces = [];
+  const dispatch = useDispatch();
+
+  const { data: ingredients, loading } = useSelector(
+    (state) => state.ingredients
+  );
+  useEffect(() => {
+    if (!ingredients.length) {
+      dispatch(fetchIngredients());
+    }
+  }, [dispatch, ingredients.length]);
+
+  const buns = ingredients.filter((item: TIngredient) => item.type === 'bun');
+  const sauces = ingredients.filter(
+    (item: TIngredient) => item.type === 'sauce'
+  );
+  const mains = ingredients.filter((item: TIngredient) => item.type === 'main');
 
   const [currentTab, setCurrentTab] = useState<TTabMode>('bun');
   const titleBunRef = useRef<HTMLHeadingElement>(null);
@@ -47,7 +62,8 @@ export const BurgerIngredients: FC = () => {
       titleSaucesRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
 
-  return null;
+  if (loading) return <Preloader />;
+  if (!ingredients.length) return <p>Ингредиенты не найдены</p>;
 
   return (
     <BurgerIngredientsUI

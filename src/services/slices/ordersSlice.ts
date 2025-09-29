@@ -4,14 +4,14 @@ import { getOrdersApi, getFeedsApi } from '../../utils/burger-api';
 import { AppDispatch } from '../store';
 import { getCookie } from '../../utils/cookie';
 
-type OrdersState = {
+export type OrdersState = {
   orders: TOrder[];
   feed: TOrdersData | null;
   loading: boolean;
   error: string | null;
 };
 
-const initialState: OrdersState = {
+export const initialState: OrdersState = {
   orders: [],
   feed: null,
   loading: false,

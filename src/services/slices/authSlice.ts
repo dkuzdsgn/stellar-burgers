@@ -11,7 +11,7 @@ import { TUser } from '@utils-types';
 import { setCookie, deleteCookie, getCookie } from '../../utils/cookie';
 import { RootState } from '../store';
 
-type TAuthState = {
+export type TAuthState = {
   form: TLoginData;
   error: string | null;
   sending: boolean;
@@ -19,7 +19,7 @@ type TAuthState = {
   isAuthChecked: boolean;
 };
 
-const initialState: TAuthState = {
+export const initialState: TAuthState = {
   form: {
     email: '',
     password: ''

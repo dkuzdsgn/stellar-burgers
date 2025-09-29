@@ -1,7 +1,6 @@
 import { describe, test, expect } from '@jest/globals';
 import reducer, {
   fetchIngredients,
-  IngredientsState,
   initialState
 } from '../slices/ingredientsSlice';
 import { TIngredient } from '../../utils/types';

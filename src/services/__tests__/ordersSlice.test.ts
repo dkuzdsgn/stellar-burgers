@@ -4,7 +4,6 @@ import reducer, {
   setFeed,
   fetchProfileOrders,
   fetchFeedOrders,
-  OrdersState,
   initialState
 } from '../slices/ordersSlice';
 import { TOrder, TOrdersData } from '../../utils/types';

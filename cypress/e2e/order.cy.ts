@@ -11,7 +11,6 @@ describe('Создание заказа', () => {
     cy.setCookie('accessToken', 'test-access-token');
     cy.wait('@getIngredients');
 
-
   })
 
   it('Создание заказа', () => {

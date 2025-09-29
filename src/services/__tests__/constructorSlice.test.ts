@@ -3,10 +3,9 @@ import reducer, {
   addIngredient,
   removeIngredient,
   moveIngredient,
-  initialState,
-  ConstructorState
+  initialState
 } from '../slices/constructorSlice';
-import { TConstructorIngredient, TOrder } from '../../utils/types';
+import { TConstructorIngredient } from '../../utils/types';
 
 const ingredient: TConstructorIngredient = {
   _id: '1',

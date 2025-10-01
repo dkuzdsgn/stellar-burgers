@@ -13,6 +13,11 @@ describe('Создание заказа', () => {
 
   })
 
+  afterEach(() => {
+    cy.clearLocalStorage();
+    cy.clearCookies();
+  })
+
   it('Создание заказа', () => {
     cy.contains('Булочка с кунжутом')
       .closest('[data-testid=ingredient-card]')
